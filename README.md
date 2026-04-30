@@ -20,8 +20,3 @@ https://chatgpt.com/
 2/12/26
 Thus, code was BASED on starter code
 Class CS340 lecture Week 6
-3. Route methods in app.js based on template
-Date: 2/19/2026
-Adapted from Prompt: *insert lecture code* I need to add Sql sample data to this. Describe how I would do it\*
-https://chatgpt.com/
-
