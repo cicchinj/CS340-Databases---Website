@@ -1,0 +1,100 @@
+{{! Citation for the following file:
+    Date: 2/19/2026
+    Adapted base from Lecture code}}
+
+<h1>Access and oversee patron accounts</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Library Card #</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each patrons}}
+        <tr>
+            <td>{{this.patronID}}</td>
+            <td>{{this.libraryCardNumber}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            <td>
+                {{! DELETE form }}
+                <form class="inlineForm" action="/patrons/delete" method="POST">
+                    <input type="hidden" name="patronID" value="{{this.patronID}}" />
+                    <button type="submit" onclick="return confirm('Delete {{this.firstName}} {{this.lastName}}?');">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Add New Patron</h2>
+<form class="cuForm" id="create_patron_form" action="/patrons/add" method="POST">
+    <label for="libraryCardNumber">Library Card #: </label>
+    <input type="text" name="libraryCardNumber" id="libraryCardNumber" required />
+
+    <label for="firstName">First Name: </label>
+    <input type="text" name="firstName" id="firstName" required />
+
+    <label for="lastName">Last Name: </label>
+    <input type="text" name="lastName" id="lastName" required />
+
+    <label for="email">Email: </label>
+    <input type="email" name="email" id="email" required />
+
+    <label for="phone">Phone: </label>
+    <input type="text" name="phone" id="phone" />
+
+    <input type="submit" value="Add Patron" />
+</form>
+
+{{! UPDATE form }}
+<h2>Update a Patron</h2>
+<!-- Patron to Update Form with Dropdown -->
+<form class="cuForm" id="update_patron_form" action="/patrons/update" method="POST">
+    <label for="update_patron_id">Patron to Update: </label>
+    <select name="patronID" id="update_patron_id" required>
+        <option value="" disabled selected>Select a Patron</option>
+        {{#each patrons}}
+        <option value="{{this.patronID}}">
+            {{this.patronID}} - {{this.firstName}} {{this.lastName}}
+        </option>
+        {{/each}}
+    </select>
+
+    <!-- Library Card # -->
+    <label for="update_libraryCardNumber">Library Card #: </label>
+    <input type="text" name="libraryCardNumber" id="update_libraryCardNumber" required />
+
+    <!-- First Name -->
+    <label for="update_firstName">First Name: </label>
+    <input type="text" name="firstName" id="update_firstName" required />
+
+    <!-- Last Name -->
+    <label for="update_lastName">Last Name: </label>
+    <input type="text" name="lastName" id="update_lastName" required />
+
+    <!-- Email -->
+    <label for="update_email">Email: </label>
+    <input type="email" name="email" id="update_email" required />
+
+    <!-- Phone # -->
+    <label for="update_phone">Phone: </label>
+    <input type="text" name="phone" id="update_phone" />
+
+    <input type="submit" value="Update Patron" />
+</form>

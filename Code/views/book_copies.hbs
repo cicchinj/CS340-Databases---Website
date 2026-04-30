@@ -1,0 +1,140 @@
+{{! Citation for the following file:
+    Date: 2/19/2026
+    Adapted base from Lecture code}}
+
+<h1>Inspect library inventory</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        <tr>
+            <th>Copy ID</th>
+            <th>Book Title</th>
+            <th>Book ID</th>
+            <th>Acquisition Date</th>
+            <th>Condition</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each book_copies}}
+        <tr>
+            <td>{{this.copyID}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.bookID}}</td>
+            <td>{{this.acquisitionDate}}</td>
+            <td>{{this.condition}}</td>
+            <td>{{this.location}}</td>
+            <td>{{this.status}}</td>
+
+            <td>
+                {{! DELETE form }}
+                <form class="inlineForm" action="/book_copies/delete" method="POST">
+                    <input type="hidden" name="copyID" value="{{this.copyID}}" />
+                    <button type="submit" onclick="return confirm('Delete this book copy?');">
+                        Delete
+                    </button>
+                </form>
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Add New Book Copy</h2>
+<!-- Book -->
+<form class="cuForm" id="create_copy_form" action="/book_copies/add" method="POST">
+    <label for="bookID">Book: </label>
+    <select name="bookID" id="bookID" required>
+        <option value="" disabled selected>Select a Book</option>
+        {{#each books}}
+        <option value="{{this.bookID}}"> (ID: {{this.bookID}}) - {{this.title}}
+        </option>
+        {{/each}}
+    </select>
+
+    <!-- Acquisition Date -->
+    <label for="acquisitionDate">Acquisition Date: </label>
+    <input type="date" name="acquisitionDate" id="acquisitionDate" required />
+
+    <!-- Condition -->
+    <label for="condition">Condition: </label>
+    <select name="condition" id="condition" required>
+        <option value="" disabled selected>Select Condition</option>
+        <option value="New">New</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Worn">Worn</option>
+        <option value="Damaged">Damaged</option>
+    </select>
+
+    <!-- Location -->
+    <label for="location">Location: </label>
+    <input type="text" name="location" id="location" required />
+
+    <!-- Status -->
+    <label for="status">Status: </label>
+    <select name="status" id="status" required>
+        <option value="" disabled selected>Select Status</option>
+        <option value="Available">Available</option>
+        <option value="Checked Out">Checked Out</option>
+        <option value="On Hold">On Hold</option>
+        <option value="Lost">Lost</option>
+    </select>
+
+    <input type="submit" value="Add Copy" />
+</form>
+
+{{! UPDATE form }}
+<h2>Update a Book Copy</h2>
+<form class="cuForm" id="update_copy_form" action="/book_copies/update" method="POST">
+    <label for="update_copy_id">Copy to Update: </label>
+    <select name="copyID" id="update_copy_id" required>
+        <option value="" disabled selected>Select a Copy</option>
+        {{#each books}}
+        <option value="{{this.copyID}}">
+            ID: {{this.copyID}} - {{this.title}} ({{this.condition}})
+        </option>
+        {{/each}}
+    </select>
+
+    <label for="update_bookID">Book: </label>
+    <select name="bookID" id="update_bookID" required>
+        <option value="" disabled selected>Select a Book</option>
+        {{#each books}}
+        <option value="{{this.bookID}}">{{this.title}} (ID: {{this.bookID}})</option>
+        {{/each}}
+    </select>
+
+    <label for="update_acquisitionDate">Acquisition Date: </label>
+    <input type="date" name="acquisitionDate" id="update_acquisitionDate" required />
+
+    <label for="update_condition">Condition: </label>
+    <select name="condition" id="update_condition" required>
+        <option value="" disabled selected>Select Condition</option>
+        <option value="New">New</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Worn">Worn</option>
+        <option value="Damaged">Damaged</option>
+    </select>
+
+    <label for="update_location">Location: </label>
+    <input type="text" name="location" id="update_location" required />
+
+    <label for="update_status">Status: </label>
+    <select name="status" id="update_status" required>
+        <option value="" disabled selected>Select Status</option>
+        <option value="Available">Available</option>
+        <option value="Checked Out">Checked Out</option>
+        <option value="On Hold">On Hold</option>
+        <option value="Lost">Lost</option>
+    </select>
+
+    <input type="submit" value="Update Copy" />
+</form>
